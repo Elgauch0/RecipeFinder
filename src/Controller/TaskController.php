@@ -26,6 +26,7 @@ class TaskController extends AbstractController
             $recette = $form->getData();
             $em->persist($recette);
             $em->flush();
+            $this->addFlash('success', 'la recette a bien été ajouté');
 
 
 

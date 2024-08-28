@@ -35,6 +35,7 @@ class ShowController extends AbstractController
 
 
             $em->flush();
+            $this->addFlash('success', 'la recette a bien été modifié');
             return $this->redirectToRoute('app_main');
         }
 
