@@ -25,7 +25,7 @@ class ShowController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/{id}', name: 'app_edit', requirements: ['id' => '[0-9]+'])]
+    #[Route('/edit/{id}', name: 'app_edit', requirements: ['id' => '[0-9]+'], methods: ['GET', 'POST'])]
     public function edit(Recette $recette, Request $request, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(RecetteType::class, $recette);
@@ -44,5 +44,16 @@ class ShowController extends AbstractController
         return $this->render('show/edit.html.twig', [
             'form' => $form
         ]);
+    }
+
+
+    #[Route('/remove/{id}', name: 'app_remove', requirements: ['id' => '[0-9]+'], methods: ['DELETE'])]
+    public function remove(Recette $recette, EntityManagerInterface $em)
+    {
+
+        $em->remove($recette);
+        $em->flush();
+        $this->addFlash('success', 'la recette a bien été supprimé');
+        return $this->redirectToRoute('app_main');
     }
 }

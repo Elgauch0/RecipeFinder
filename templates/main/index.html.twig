@@ -2,20 +2,6 @@
 
 {% block title %}Recepies
 {% endblock %}
-
-{# {% block body %}
-	<h1>Nos meilleurs recettes rien que pour vous :</h1>
-	{% for recette in recettes %}
-		<li>
-
-			<a href="{{path('app_show',{'id':recette.id})}}">{{recette.title}}</a>
-			<a class="btn btn-primary btn-sm" href="{{path('app_edit',{'id':recette.id})}}">editer</a>
-
-		</li>
-
-	{% endfor %}
-{% endblock %} #}
-
 {% block body %}
 	<h1>Nos meilleurs recettes rien que pour vous :</h1>
 
@@ -33,7 +19,14 @@
 						<a href="{{path('app_show',{'id':recette.id})}}">{{recette.title}}</a>
 					</td>
 					<td>
-						<a class="btn btn-primary btn-sm" href="{{path('app_edit',{'id':recette.id})}}">editer</a>
+						<div class="d-flex gap-1">
+							<a class="btn btn-primary btn-sm" href="{{path('app_edit',{'id':recette.id})}}">editer</a>
+							<form action="{{path('app_remove',{'id':recette.id})}}" method="post">
+								<input type="hidden" name="_method" value="DELETE">
+								<button type="submit" class="btn btn-danger btn-sm">supprimer</button>
+							</form>
+						</div>
+
 					</td>
 				</tr>
 			{% endfor %}
