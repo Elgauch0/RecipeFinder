@@ -9,6 +9,7 @@
 		<thead>
 			<tr>
 				<th>Titre</th>
+				<th>Categorie</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -17,6 +18,9 @@
 				<tr>
 					<td>
 						<a href="{{path('app_show',{'id':recette.id})}}">{{recette.title}}</a>
+					</td>
+					<td>
+						<p>{{recette.category.name | default('non trouvé')}}</p>
 					</td>
 					<td>
 						<div class="d-flex gap-1">

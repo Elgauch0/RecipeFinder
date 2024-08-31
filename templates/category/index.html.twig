@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Categories
+{% endblock %}
+{% block body %}
+	<h1>Nos Categories</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Categorie</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for categorie in categories %}
+				<tr>
+					<td>
+						<h3>{{categorie.name}}</h3>
+					</td>
+					<td>
+						<div class="d-flex gap-1">
+							<a class="btn btn-primary btn-sm" href="{{path('category.edit',{'id':categorie.id})}}">editer</a>
+							<form action="{{path('category.remove',{'id':categorie.id})}}" method="post">
+								<input type="hidden" name="_method" value="DELETE">
+								<button type="submit" class="btn btn-danger btn-sm">supprimer</button>
+							</form>
+						</div>
+					</td>
+
+				</tr>
+
+			{% endfor %}
+
+
+		</tbody>
+
+
+	</table>
+
+{% endblock %}

@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Recette;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +17,14 @@ class RecetteType extends AbstractType
         $builder
             ->add('title')
             ->add('content')
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'multiple' => false,
+                'choice_label' => 'name',
+                'by_reference' => false,
+
+
+            ])
             // ->add('createdAt', null, [
             //     'widget' => 'single_text',
             // ])

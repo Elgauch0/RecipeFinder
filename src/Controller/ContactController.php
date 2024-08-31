@@ -13,27 +13,26 @@ use Symfony\Component\Mailer\MailerInterface;
 
 
 
+
+
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'app_contact')]
     public function contact(Request $request, MailerInterface $mailer): Response
     {
         $data = new ContactDto();
-        $data->name = "Ahmed";
-        $data->email = "Ahmedjjjj@gmail.com";
-        $data->content = "kjdksjkds kj sdkjsdkj s this is a beatiful email";
-
         $form = $this->createForm(ContactType::class, $data);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $email = (new Email())
                 ->from($data->email)
-                ->to('dawkinsdaw@gmail.com')
+                ->to('bite-force@jlafsmnu.mailosaur.net')
                 ->subject('Time for Symfony Mailer!')
                 ->text($data->content);
 
-
             $mailer->send($email);
+
+
 
 
 

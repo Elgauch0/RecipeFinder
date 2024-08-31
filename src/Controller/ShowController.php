@@ -15,7 +15,7 @@ use DateTimeImmutable;
 class ShowController extends AbstractController
 {
     #[Route('/{id}', name: 'app_show', requirements: ['id' => '[0-9]+'])]
-    public function index(Request $request,  int $id, RecetteRepository $repo): Response
+    public function index(int $id, RecetteRepository $repo): Response
     {
         $recette = $repo->find($id);
 
@@ -33,7 +33,7 @@ class ShowController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $recette->setCreatedAt(new DateTimeImmutable());
 
-
+            $em->persist($recette);
             $em->flush();
             $this->addFlash('success', 'la recette a bien été modifié');
             return $this->redirectToRoute('app_main');
@@ -55,5 +55,31 @@ class ShowController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'la recette a bien été supprimé');
         return $this->redirectToRoute('app_main');
+    }
+
+
+    #[Route('/ajouter', name: 'app_ajouter')]
+    public function new(Request $request, EntityManagerInterface $em): Response
+    {
+        $recette = new Recette();
+
+
+        $form = $this->createForm(RecetteType::class, $recette);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $recette->setCreatedAt(new DateTimeImmutable());
+            $recette = $form->getData();
+            $em->persist($recette);
+            $em->flush();
+            $this->addFlash('success', 'la recette a bien été ajouté');
+
+
+
+            return $this->redirectToRoute('app_main');
+        }
+
+        return $this->render('show/newForm.html.twig', [
+            'form' => $form,
+        ]);
     }
 }
